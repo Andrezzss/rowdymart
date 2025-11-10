@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load money %}
+{% block title %}Shop Fruits — Rowdy Mart{% endblock %}
+{% block content %}
+<section class="hero p-4 p-md-5 mb-4">
+  <div class="row align-items-center g-4">
+    <div class="col-md-7">
+      <h1 class="display-6 fw-bold mb-2">Fresh fruit for busy students.</h1>
+      <p class="lead mb-3">Order campus-friendly snacks and fruit with live inventory, clear pricing, and simple checkout.</p>
+      <p class="small text-muted mb-0">Use discount codes, see 8.25% tax upfront, and manage everything in your Rowdy Mart account.</p>
+    </div>
+    <div class="col-md-5 text-md-end">
+      <p class="text-muted mb-1">Quick links</p>
+      <div class="d-flex flex-wrap gap-2 justify-content-md-end">
+        <a class="btn btn-success btn-sm" href="/cart/">View Cart</a>
+        {% if user.is_authenticated %}
+          <a class="btn btn-outline-primary btn-sm" href="/orders/my-orders/">My Orders</a>
+        {% else %}
+          <a class="btn btn-outline-primary btn-sm" href="/accounts/register/">Create Student Account</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<form class="row g-2 mb-3">
+  <div class="col-md-6">
+    <input name="q" value="{{ q }}" class="form-control" placeholder="Search by name or description" />
+  </div>
+  <div class="col-md-4">
+    <select name="sort" class="form-select">
+      <option value="">Sort…</option>
+      <option value="price_asc" {% if sort == "price_asc" %}selected{% endif %}>Price: Low to High</option>
+      <option value="price_desc" {% if sort == "price_desc" %}selected{% endif %}>Price: High to Low</option>
+      <option value="availability" {% if sort == "availability" %}selected{% endif %}>Availability</option>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-success w-100">Apply</button>
+  </div>
+</form>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+  {% for item in items %}
+  <div class="col">
+    <div class="card h-100 position-relative">
+      {% if item.is_on_sale %}
+      <span class="position-absolute m-2 px-2 py-1 rounded-pill badge-sale">On Sale</span>
+      {% endif %}
+      {% if item.image %}
+      <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+      {% endif %}
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title">{{ item.name }}</h5>
+        <p class="card-text small text-muted mb-2">{{ item.description|truncatechars:70 }}</p>
+        {% if item.is_on_sale and item.sale_price %}
+          <div>
+            <span class="text-decoration-line-through me-2">{{ item.price|money }}</span>
+            <span class="fw-bold text-danger">{{ item.sale_price|money }}</span>
+          </div>
+        {% else %}
+          <div class="fw-bold">{{ item.price|money }}</div>
+        {% endif %}
+        <div class="text-muted mb-2">In stock: {{ item.quantity_available }}</div>
+        <div class="mt-auto">
+          <a class="btn btn-outline-primary btn-sm me-2" href="{% url 'item_detail' item.slug %}">Details</a>
+          <form method="post" action="/cart/add/" class="d-inline">
+            {% csrf_token %}
+            <input type="hidden" name="item_id" value="{{ item.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button class="btn btn-success btn-sm">Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>No items found.</p>
+  {% endfor %}
+</div>
+{% endblock %}

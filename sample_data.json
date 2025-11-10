@@ -1,0 +1,87 @@
+[
+  {
+    "model": "catalog.item",
+    "pk": 1,
+    "fields": {
+      "name": "Strawberries (1 lb)",
+      "slug": "strawberries-1lb",
+      "description": "Sweet, fresh strawberries perfect for smoothies or late-night study snacks.",
+      "price": "4.99",
+      "quantity_available": 40,
+      "image": "",
+      "category": "Berries",
+      "is_on_sale": true,
+      "sale_price": "3.99",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.item",
+    "pk": 2,
+    "fields": {
+      "name": "Bananas (6 pack)",
+      "slug": "bananas-6-pack",
+      "description": "Bundle of bananas ideal for breakfast on the go.",
+      "price": "2.49",
+      "quantity_available": 60,
+      "image": "",
+      "category": "Everyday",
+      "is_on_sale": false,
+      "sale_price": null,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.item",
+    "pk": 3,
+    "fields": {
+      "name": "Honeycrisp Apples (3 ct)",
+      "slug": "honeycrisp-apples-3ct",
+      "description": "Crisp, cold, and perfect for a quick snack between classes.",
+      "price": "3.79",
+      "quantity_available": 35,
+      "image": "",
+      "category": "Apples",
+      "is_on_sale": false,
+      "sale_price": null,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.item",
+    "pk": 4,
+    "fields": {
+      "name": "Seedless Grapes (1 lb)",
+      "slug": "seedless-grapes-1lb",
+      "description": "Easy shareable snack for study groups.",
+      "price": "4.29",
+      "quantity_available": 25,
+      "image": "",
+      "category": "Grapes",
+      "is_on_sale": true,
+      "sale_price": "3.49",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.item",
+    "pk": 5,
+    "fields": {
+      "name": "Navel Oranges (4 ct)",
+      "slug": "navel-oranges-4ct",
+      "description": "Bright and juicy oranges to survive exam season.",
+      "price": "3.29",
+      "quantity_available": 30,
+      "image": "",
+      "category": "Citrus",
+      "is_on_sale": false,
+      "sale_price": null,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    }
+  }
+]

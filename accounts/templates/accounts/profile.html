@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Account Settings — Rowdy Mart{% endblock %}
+{% block content %}
+<h2 class="mb-3">Account Settings</h2>
+
+<div class="row g-4">
+
+  <!-- Personal Info -->
+  <div class="col-md-6">
+    <div class="card p-3 h-100">
+      <h5 class="mb-2">Personal Information</h5>
+      <p class="small text-muted mb-2">Update your basic details so we know who&apos;s picking up orders.</p>
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-2">
+          {{ uform.first_name.label_tag }}{{ uform.first_name }}
+        </div>
+        <div class="mb-2">
+          {{ uform.last_name.label_tag }}{{ uform.last_name }}
+        </div>
+        <div class="mb-2">
+          {{ uform.email.label_tag }}{{ uform.email }}
+        </div>
+        <hr class="my-3">
+        <h6 class="mb-2">Contact & Student Info</h6>
+        <div class="mb-2">
+          {{ pform.phone_number.label_tag }}{{ pform.phone_number }}
+        </div>
+        <div class="mb-2">
+          {{ pform.student_id.label_tag }}{{ pform.student_id }}
+        </div>
+        <button class="btn btn-success mt-2">Save changes</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delivery, Notifications, Security, Orders, Support -->
+  <div class="col-md-6">
+    <div class="card p-3 mb-3">
+      <h5 class="mb-2">Pickup & Delivery Preferences</h5>
+      <p class="small text-muted">Tell us where you prefer to grab your order.</p>
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-2">
+          {{ pform.default_pickup_location.label_tag }}{{ pform.default_pickup_location }}
+        </div>
+        <div class="mb-2">
+          {{ pform.delivery_notes.label_tag }}{{ pform.delivery_notes }}
+        </div>
+        <!-- Hidden user fields so this form can submit cleanly if used alone -->
+        {{ uform.first_name.as_hidden }}
+        {{ uform.last_name.as_hidden }}
+        {{ uform.email.as_hidden }}
+        <button class="btn btn-success mt-2">Save pickup settings</button>
+      </form>
+    </div>
+
+    <div class="card p-3 mb-3">
+      <h5 class="mb-2">Notifications</h5>
+      <p class="small text-muted mb-2">Control how Rowdy Mart contacts you (demo: stored as preferences).</p>
+      <form method="post">
+        {% csrf_token %}
+        {{ uform.first_name.as_hidden }}
+        {{ uform.last_name.as_hidden }}
+        {{ uform.email.as_hidden }}
+        {{ pform.default_pickup_location.as_hidden }}
+        {{ pform.delivery_notes.as_hidden }}
+        <div class="form-check mb-1">
+          {{ pform.order_updates_opt_in }} {{ pform.order_updates_opt_in.label_tag }}
+        </div>
+        <div class="form-check mb-2">
+          {{ pform.promo_opt_in }} {{ pform.promo_opt_in.label_tag }}
+        </div>
+        <button class="btn btn-success btn-sm mt-1">Save notification settings</button>
+      </form>
+    </div>
+
+    <div class="card p-3 mb-3">
+      <h5 class="mb-2">Security</h5>
+      <p class="small text-muted">Manage your password securely.</p>
+      <a href="/accounts/password-change/" class="btn btn-outline-secondary btn-sm mb-2 w-100">Change password</a>
+      <a href="/accounts/password-reset/" class="btn btn-outline-primary btn-sm w-100">Reset password via email link</a>
+    </div>
+
+    <div class="card p-3">
+      <h5 class="mb-2">Orders & Support</h5>
+      <p class="small text-muted mb-2">Review your purchases or get help with a problem.</p>
+      <a href="/orders/my-orders/" class="btn btn-outline-secondary btn-sm w-100 mb-2">View my orders</a>
+      <p class="small text-muted mb-0">
+        For demo purposes, contact support via the Django admin notes or course instructions.
+        In production, this would link to a help center or support form.
+      </p>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

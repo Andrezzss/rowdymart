@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load money %}
+{% block title %}{{ item.name }} — Rowdy Mart{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-5">
+    {% if item.image %}
+      <img src="{{ item.image.url }}" class="img-fluid rounded" alt="{{ item.name }}">
+    {% else %}
+      <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height:260px;">
+        <span class="text-muted">No image</span>
+      </div>
+    {% endif %}
+  </div>
+  <div class="col-md-7">
+    <a href="/" class="small text-decoration-none">← Back to all fruits</a>
+    <h2 class="mt-1">{{ item.name }}</h2>
+    <p class="text-muted">{{ item.description }}</p>
+    <p>In stock: <strong>{{ item.quantity_available }}</strong></p>
+    <p class="fs-4 mb-3">
+      {% if item.is_on_sale and item.sale_price %}
+        <span class="text-decoration-line-through me-2">{{ item.price|money }}</span>
+        <span class="text-danger fw-bold">{{ item.sale_price|money }}</span>
+      {% else %}
+        <span class="fw-bold">{{ item.price|money }}</span>
+      {% endif %}
+    </p>
+    <form method="post" action="/cart/add/" class="d-flex flex-wrap align-items-center gap-2">
+      {% csrf_token %}
+      <input type="hidden" name="item_id" value="{{ item.id }}">
+      <div class="input-group" style="max-width:180px;">
+        <span class="input-group-text">Qty</span>
+        <input type="number" name="quantity" min="1" value="1" class="form-control">
+      </div>
+      <button class="btn btn-success btn-lg">Add to Cart</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
