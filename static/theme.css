@@ -3,115 +3,16 @@
   --rm-dark: #123026;
   --rm-bg: #f8fafc;
 }
-body {
-  background-color: var(--rm-bg);
-}
-.navbar {
-  box-shadow: 0 2px 4px rgba(15,23,42,0.06);
-}
-.navbar-brand {
-  color: var(--rm-green) !important;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-.btn-success {
-  background-color: var(--rm-green);
-  border-color: var(--rm-green);
-}
-.card {
-  border-radius: 1rem;
-  border: 1px solid #e5e7eb;
-}
-.card-img-top {
-  object-fit: cover;
-  height: 190px;
-}
-.hero {
-  background: radial-gradient(circle at top left, #bbf7d0, #ecfdf5);
-  border-radius: 1.5rem;
-}
-.badge-sale {
-  background: #fee2e2;
-  color: #b91c1c;
-  font-size: 0.7rem;
-}
-.table thead th {
-  background-color: #f9fafb;
-}
-/* ====== Fix overlapping and improve card spacing ====== */
-.card {
-  position: relative;
-  border-radius: 1rem;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-  transition: transform 0.15s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-}
-
-.card-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-top: 1rem;
-  line-height: 1.5;
-}
-
-.card-title {
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin-bottom: 0.4rem;
-  min-height: 2.4rem;
-  word-wrap: break-word;
-}
-
-.card-text {
-  font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 0.6rem;
-}
-
-.badge-sale {
-  top: 8px;
-  left: 8px;
-  z-index: 10;
-  background: #fee2e2;
-  color: #b91c1c;
-  font-size: 0.7rem;
-  font-weight: 500;
-  padding: 0.2rem 0.5rem;
-  border-radius: 0.5rem;
-}
-
-.card-img-top {
-  height: 190px;
-  object-fit: cover;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
-}
-
-/* Slightly more breathing room below prices and buttons */
-.card .fw-bold,
-.card .text-muted {
-  line-height: 1.4;
-}
-
-.card .btn-sm {
-  font-size: 0.85rem;
-}
-:root {
-  --rm-green: #1f9d55;
-  --rm-dark: #123026;
-  --rm-bg: #f8fafc;
-}
 
 /* Page background */
 body {
   background-color: var(--rm-bg);
+  font-family: -apple-system, BlinkMacSystemFont, system-ui, -system-ui,
+               -ui-sans-serif, -apple-system, BlinkMacSystemFont,
+               "SF Pro Text", "SF Pro Icons", "Helvetica Neue",
+               "Helvetica", "Arial", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Navbar */
@@ -133,15 +34,57 @@ body {
 
 /* Cards */
 .card {
+  position: relative;                /* anchor for badge */
   border-radius: 1rem;
   border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+/* Reserve space at the top ONLY when a sale badge exists (prevents overlap) */
+.card:has(.badge-sale) {
+  padding-top: 20px;                 /* space for the corner chip */
+}
+
+/* Media wrapper so badge can live over an image if present */
+.card-media { position: relative; }
 
 /* Product image */
 .card-img-top {
   object-fit: cover;
   height: 190px;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  display: block;
 }
+
+/* Card content */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 1rem;
+  line-height: 1.5;
+}
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  min-height: 2.4rem;
+  word-wrap: break-word;
+}
+.card-text {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.6rem;
+}
+.card .fw-bold,
+.card .text-muted { line-height: 1.4; }
+.card .btn-sm { font-size: 0.85rem; }
 
 /* Hero banner */
 .hero {
@@ -149,24 +92,38 @@ body {
   border-radius: 1.5rem;
 }
 
-/* "On Sale" badge */
+/* ================= NEW "On Sale" chip — tidy, unobtrusive ================= */
 .badge-sale {
-  background: #fee2e2;
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  z-index: 10;
+
+  /* look */
+  background: #fff5f5;               /* soft background */
   color: #b91c1c;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.22rem 0.5rem;
+  border-radius: 999px;               /* pill */
+  border: 1px solid #fde2e2;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+
+  /* behavior */
+  pointer-events: none;               /* no click interference */
+  line-height: 1;
+}
+
+/* Optional tiny dot to the left, feels like a sticker */
+.badge-sale::before {
+  content: "";
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  margin-right: 6px;
 }
 
 /* Table headers */
-.table thead th {
-  background-color: #f9fafb;
-}
-
-/* ===== Typography & smoothing (ONLY lettering tweak) ===== */
-html, body {
-  font-family: -apple-system, BlinkMacSystemFont, system-ui, -system-ui,
-               -ui-sans-serif, -apple-system, BlinkMacSystemFont,
-               "SF Pro Text", "SF Pro Icons", "Helvetica Neue",
-               "Helvetica", "Arial", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+.table thead th { background-color: #f9fafb; }
