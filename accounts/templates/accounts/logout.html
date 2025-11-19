@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Logged Out — Rowdy Mart{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center">
+  <h2 class="mb-3">You’ve been logged out</h2>
+  <p class="text-muted mb-4">Thanks for shopping at Rowdy Mart.</p>
+  <a class="btn btn-success" href="{% url 'login' %}">Log in again</a>
+</div>
+{% endblock %}

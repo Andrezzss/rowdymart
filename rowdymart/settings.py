@@ -78,9 +78,12 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+# IMPORTANT: remove LOGOUT_REDIRECT_URL so LogoutView uses its template
+# If you ever want redirect behavior instead of a page, you can add this back.
+# LOGOUT_REDIRECT_URL = "/accounts/login/"
+
+# For dev: password reset emails show up in the terminal/console
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+LOGOUT_REDIRECT_URL = "/accounts/login/"
